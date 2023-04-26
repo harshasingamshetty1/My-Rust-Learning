@@ -1,19 +1,28 @@
 // Rust By Example:  https://practice.rs/ownership/ownership.html
 
+/*
+ There can be only one owner at a time for any variable
+
+ when the owner goes out of scope, the variable is dropped
+
+ At any given time, you can have either one mutable reference or any number of immutable references.
+
+*/
+
 //Exercise 1: Make the code work
 // Don't modify code in main!
-// fn main() {
-//     let s1 = String::from("hello, world");
-//     let s2 = take_ownership(s1);
+fn main() {
+    let s1 = String::from("hello, world");
+    let s2 = take_ownership(s1);
 
-//     println!("{}", s2);
-// }
+    println!("{}", s2);
+}
 
-// // Only modify the code below!
-// fn take_ownership(s: String) -> String {
-//     println!("{}", s);
-//     s
-// }
+// Only modify the code below!
+fn take_ownership(s: String) -> String {
+    println!("{}", s);
+    s
+}
 
 //Exercise 2: Make the code work
 // Don't modify code in main!
@@ -100,11 +109,11 @@
 // }
 
 //exercise 9
-fn main() {
-    let t = (String::from("hello"), String::from("world"));
+// fn main() {
+//     let t = (String::from("hello"), String::from("world"));
 
-    // Fill the blanks
-    let (ref s1, ref s2) = t;
+//     // Fill the blanks
+//     let (ref s1, ref s2) = t;
 
-    println!("{:?}, {:?}, {:?}", s1, s2, t); // -> "hello", "world", ("hello", "world")
-}
+//     println!("{:?}, {:?}, {:?}", s1, s2, t); // -> "hello", "world", ("hello", "world")
+// }
