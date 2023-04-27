@@ -1,6 +1,14 @@
 #[allow(unused_variables)]
 #[allow(unused_assignments)]
+/*
+   Implementing a trait for a any type that satisfies another trait, is called blanket implementaion
+   ex:
 
+   impl<T: Display> ToString for T {}
+
+   this means that, we are implementing the ToString trait for any type that satisfies the Display trait.
+   This is called a blanket implementation.
+*/
 trait Bark {
     fn bark(&self) -> String;
 }
