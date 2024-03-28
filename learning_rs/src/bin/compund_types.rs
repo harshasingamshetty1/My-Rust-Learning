@@ -170,28 +170,148 @@ bcoz "letter" scope dies in that line itself.
 //Partial Move in Structs
 // when we move only any part of a struct, then we cannot borrow the struct as a whole again, instead we can use 
 // the un moved parts of the struct.
+// fn main() {
+//     #[derive(Debug)]
+//     struct Person {
+//         name: String,
+//         age: Box<u8>,
+//     }
+
+//     let person = Person {
+//         name: String::from("Alice"),
+//         age: Box::new(20),
+//     };
+
+//     // `name` is moved out of person, but `age` is referenced
+//     let Person { name, ref age } = person;
+
+//     println!("The person's age is {}", age);
+
+//     println!("The person's name is {}", name);
+
+//     // Error! borrow of partially moved value: `person` partial move occurs
+//     //println!("The person struct is {:?}", person);
+
+//     // `person` cannot be used but `person.age` can be used as it is not moved
+//     println!("The person's age from person struct is {}", person.age);
+// }
+
+//////////////////////////////////    ENUMS      ///////////////////////////////////////////////////
+
+// Ex 1
+
+// Fix the errors
+// enum Number {
+//     Zero,
+//     One,
+//     Two,
+// }
+
+// enum Number1 {
+//     Zero = 0,
+//     One,
+//     Two,
+// }
+
+// // C-like enum
+// enum Number2 {
+//     Zero = 0.0,
+//     One = 1.0,
+//     Two = 2.0,
+// }
+
+
+// fn main() {
+//     // An enum variant can be converted to a integer by `as`
+//     assert_eq!(Number::One, Number1::One);
+//     assert_eq!(Number1::One, Number2::One);
+
+//     println!("Success!");
+// } 
+
+//sol 1
+/* the discriminator default starts with 0, but we can change it to any other integer value */
+
+// enum Number {
+//     Zero,
+//     One,
+//     Two,
+// }
+
+// enum Number1 {
+//     Zero = 0,
+//     One,
+//     Two,
+// }
+
+// // C-like enum
+// enum Number2 {
+//     Zero ,
+//     One = 1,
+//     Two = 2,
+// }
+
+
+// fn main() {
+//     // An enum variant can be converted to a integer by `as`
+//     assert_eq!(Number::One as u8, Number1::One as u8);
+//     assert_eq!(Number1::One as u8, Number2::One as u8);
+//     println!("{:?}", Number1::One as u8);
+//     println!("Success!");
+// } 
+
+
+// ex 5
+
+// Fill in the blank to make the `println` work.
+// Also add some code to prevent the `panic` from running.
+// fn main() {
+//     let five = Some(5);
+//     let six = plus_one(five);
+//     let none = plus_one(None);
+
+//     if let Some(n) = six {
+//         println!("{}", n);
+
+//         println!("Success!");
+//     } 
+//       else{panic!("NEVER LET THIS RUN！");}  
+    
+// } 
+
+// fn plus_one(x: Option<i32>) -> Option<i32> {
+//     match x {
+//         None => None,
+//         Some(i) => Some(i + 1),
+//     }
+// }
+
+
+
+//sol 5
+/* in Rust, we dont have null which can be genericly used to every type, instead we must use, 
+    Option<T> type, which is a generic type, which can be used to represent a value that may or may not be there.
+    Understand that, Option<i32> !== i32.
+    So, to we must destructure the Option<i32> type, and check if it is Some or None. only then we can use the value.
+    and hence, the errors of falling into null will be avoided.
+*/
 fn main() {
-    #[derive(Debug)]
-    struct Person {
-        name: String,
-        age: Box<u8>,
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
+
+    if let Some(n) = six {
+        println!("{}", n);
+
+        println!("Success!");
+    } 
+      else{panic!("NEVER LET THIS RUN!");}  
+    
+} 
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i + 1),
     }
-
-    let person = Person {
-        name: String::from("Alice"),
-        age: Box::new(20),
-    };
-
-    // `name` is moved out of person, but `age` is referenced
-    let Person { name, ref age } = person;
-
-    println!("The person's age is {}", age);
-
-    println!("The person's name is {}", name);
-
-    // Error! borrow of partially moved value: `person` partial move occurs
-    //println!("The person struct is {:?}", person);
-
-    // `person` cannot be used but `person.age` can be used as it is not moved
-    println!("The person's age from person struct is {}", person.age);
 }
