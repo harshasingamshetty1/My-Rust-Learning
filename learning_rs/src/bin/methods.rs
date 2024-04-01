@@ -77,7 +77,8 @@ enum TrafficLightColor {
 // Implement TrafficLightColor with a method.
 impl TrafficLightColor {
     fn color(&self) -> &str {
-       match self {
+    //its bcoz, we cannot use if stmts with these custom enums, so we must use the match
+        match self {
             TrafficLightColor::Red =>  "red",
             TrafficLightColor::Yellow =>  "yellow",
             TrafficLightColor::Green =>  "green",
